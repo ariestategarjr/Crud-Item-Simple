@@ -7,6 +7,15 @@
     <title>Simple Crud Stock</title>
 </head>
 <body>
-    <h1>Test!</h1>
+    <h1><%= title %></h1>
+    <table>
+        <% for(let item of items) { %>
+        <tr>
+            <td><%= item.kode_barang %></td>
+            <td><%= item.nama_barang %></td>
+            <td><%= item.stok_barang %></td>
+        </tr>
+        <% } %>
+    </table>
 </body>
 </html>
