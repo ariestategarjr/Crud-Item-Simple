@@ -8,7 +8,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ariestategarjr/Crud-User.git"
+    "url": "git+https://github.com/ariestategarjr/Crud-User.git",
+    "start": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
@@ -22,5 +23,8 @@
     "ejs": "^3.1.8",
     "express": "^4.18.2",
     "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
   }
 }
