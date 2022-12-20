@@ -5,18 +5,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Crud Stock</title>
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-    <h1><%= title %></h1>
-    <table>
-        <% for(let item of items) { %>
-        <tr>
-            <td><%= item.kode_barang %></td>
-            <td><%= item.nama_barang %></td>
-            <td><%= item.stok_barang %></td>
-        </tr>
-        <% } %>
-        
-    </table>
+    <div class="container">
+        <h1><%= title %></h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Kode Barang</th>
+                <th scope="col">Nama Barang</th>
+                <th scope="col">Stok Barang</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% for(let item of items) { %>
+            <tr>
+                <th scope="row"><%= item.kode_barang %></th>
+                <td><%= item.nama_barang %></td>
+                <td><%= item.stok_barang %></td>
+            </tr>
+            <% } %>
+            </tbody>
+        </table>
+      </div>
+
+      <script src="/assets/js/jquery-3.6.2.min.js"></script>
+      <script src="/assets/js/bootstrap.min.js"></script>
 </body>
 </html>
