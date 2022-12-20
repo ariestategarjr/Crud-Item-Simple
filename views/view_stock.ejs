@@ -9,23 +9,36 @@
 </head>
 <body>
     <div class="container">
+        <br>
+        
         <h1><%= title %></h1>
+        <br>
+
+        <button class="btn btn-dark">Add New Item</button>
+        <br><br>
+
         <table class="table">
             <thead>
-            <tr>
-                <th scope="col">Kode Barang</th>
-                <th scope="col">Nama Barang</th>
-                <th scope="col">Stok Barang</th>
-            </tr>
+                <tr>
+                    <th scope="col">Kode Barang</th>
+                    <th scope="col">Nama Barang</th>
+                    <th scope="col">Stok Barang</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
             </thead>
             <tbody>
-            <% for(let item of items) { %>
-            <tr>
-                <th scope="row"><%= item.kode_barang %></th>
-                <td><%= item.nama_barang %></td>
-                <td><%= item.stok_barang %></td>
-            </tr>
-            <% } %>
+                <% for(let item of items) { %>
+                <tr>
+                    <th scope="row"><%= item.kode_barang %></th>
+                    <td><%= item.nama_barang %></td>
+                    <td><%= item.stok_barang %></td>
+                    <td><button class="btn btn-primary">Detail</button></td>
+                    <td><button class="btn btn-secondary">Edit</button></td>
+                    <td><button class="btn btn-danger">Delete</button></td>
+                </tr>
+                <% } %>
             </tbody>
         </table>
       </div>
