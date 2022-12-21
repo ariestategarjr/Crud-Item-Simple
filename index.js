@@ -24,11 +24,21 @@ app.use('/assets', express.static(__dirname + '/public'));
 
 // route for homepage
 app.get("/", (req, res) => {
-    // const data = response(200, "data", "OK", res);
-    const getSQL = "SELECT * FROM stock";
-    db.query(getSQL, (err, result) => {
+    const sql = "SELECT * FROM stock";
+    db.query(sql, (err, result) => {
         const items = JSON.parse(JSON.stringify(result));
         res.render("view_stock", { items: items, title: "Simple Stock Items App" });
+    });
+});
+
+// route for add new item
+app.post("/item", (req, res) => {
+    const { kode_barang, nama_barang, stok_barang } = req.body;
+    const sql = `INSERT INTO stock (kode_barang, nama_barang, stok_barang) 
+                 VALUES ('${kode_barang}', '${nama_barang}', '${stok_barang}')`;
+    db.query(sql, (err, result) => {
+        if(err) throw err;
+        res.redirect("/");
     });
 });
 

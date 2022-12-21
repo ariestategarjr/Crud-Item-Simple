@@ -46,15 +46,29 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Item</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                    ...
+                        <form action="/item" method="post">
+                            <div class="mb-3">
+                              <label for="exampleInputEmail1" class="form-label">Kode Barang</label>
+                              <input type="text" class="form-control" id="exampleItext1" aria-describedby="emailHelp" name="kode_barang">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Nama Barang</label>
+                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="nama_barang">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Stok Barang</label>
+                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="stok_barang">
+                            </div>
+                            <button type="submit" class="btn btn-success float-end ms-1">Submit</button>
+                            <button type="button" class="btn btn-secondary float-end me-1" data-bs-dismiss="modal">Close</button>
+                        </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <p>...</p>
                     </div>
                 </div>
             </div>
