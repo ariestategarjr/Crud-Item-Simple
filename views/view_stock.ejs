@@ -17,7 +17,7 @@
         <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalAddNew">Add New</button>
         <br><br>
 
-        <table class="table">
+        <table class="table" id="stockTable">
             <thead>
                 <tr>
                     <th scope="col">Kode Barang</th>
@@ -32,9 +32,10 @@
                     <th scope="row"><%= item.kode_barang %></th>
                     <td><%= item.nama_barang %></td>
                     <td><%= item.stok_barang %></td>
-                    <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDetail">Detail</button>
-                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalEdit">Edit</button>
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDelete">Delete</button>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDetail">Detail</button>
+                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalEdit" data-id="<%= item.kode_barang %>">Edit</button> -->
+                        <button type="button" class="btn btn-danger delete" data-bs-toggle="modal" data-bs-target="#modalDelete" data-id="<%= item.kode_barang %>">Delete</button> -->
                     </td>
                 </tr>
                 <% } %>
@@ -42,6 +43,7 @@
         </table>
 
         <!-- Modal for Add New -->
+        <form action="/save" method="post">
         <div class="modal fade" id="modalAddNew" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -50,22 +52,20 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="/item" method="post">
-                            <div class="mb-3">
-                              <label for="exampleInputEmail1" class="form-label">Kode Barang</label>
-                              <input type="text" class="form-control" id="exampleItext1" aria-describedby="emailHelp" name="kode_barang">
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Nama Barang</label>
-                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="nama_barang">
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Stok Barang</label>
-                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="stok_barang">
-                            </div>
-                            <button type="submit" class="btn btn-success float-end ms-1">Submit</button>
-                            <button type="button" class="btn btn-secondary float-end me-1" data-bs-dismiss="modal">Close</button>
-                        </form>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Kode Barang</label>
+                            <input type="text" class="form-control" id="exampleItext1" aria-describedby="emailHelp" name="kode_barang">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Nama Barang</label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="nama_barang">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Stok Barang</label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="stok_barang">
+                        </div>
+                        <button type="submit" class="btn btn-success float-end ms-1">Submit</button>
+                        <button type="button" class="btn btn-secondary float-end me-1" data-bs-dismiss="modal">Close</button>    
                     </div>
                     <div class="modal-footer">
                         <p>...</p>
@@ -73,6 +73,7 @@
                 </div>
             </div>
         </div>
+        </form>
 
         <!-- Modal for Detail-->
         <div class="modal fade" id="modalDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -113,6 +114,7 @@
         </div>
 
         <!-- Modal for Delete-->
+        <form action="/delete" method="post">
         <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -121,19 +123,28 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                    ...
+                        <p>Are you sure want to delete this item ?</p>
                     </div>
                     <div class="modal-footer">
+                        <input type="hidden" name="kode_barang" class="kode_barang_variable" required>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
                     </div>
                 </div>
             </div>
         </div>
+        </form>
 
     </div>
 
       <script src="/assets/js/jquery-3.6.2.min.js"></script>
       <script src="/assets/js/bootstrap.min.js"></script>
+      <script>
+        // mengisi elemen dengan class kode_barang_variable sehingga mempunyai nilai kode_barang
+        $('#stockTable').on('click','.delete',function(){
+            let kode_barang = $(this).data('id');
+            $('.kode_barang_variable').val(kode_barang);
+        });
+      </script>
 </body>
 </html>

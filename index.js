@@ -32,11 +32,23 @@ app.get("/", (req, res) => {
 });
 
 // route for add new item
-app.post("/item", (req, res) => {
+app.post("/save", (req, res) => {
     const { kode_barang, nama_barang, stok_barang } = req.body;
     const sql = `INSERT INTO stock (kode_barang, nama_barang, stok_barang) 
                  VALUES ('${kode_barang}', '${nama_barang}', '${stok_barang}')`;
     db.query(sql, (err, result) => {
+        if(err) throw err;
+        res.redirect("/");
+    });
+});
+
+// route for delete item
+app.post("/delete", (req, res) => {
+    const { kode_barang } = req.body;
+    // console.log(kode_barang);
+    const sql = `DELETE FROM stock WHERE kode_barang='${kode_barang}'`;
+    db.query(sql, (err, result) => {
+        // console.log(result);
         if(err) throw err;
         res.redirect("/");
     });
