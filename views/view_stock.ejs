@@ -17,7 +17,7 @@
         <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalAddNew">Add New</button>
         <br><br>
 
-        <table class="table" id="stockTable">
+        <table class="table" id="stock-table">
             <thead>
                 <tr>
                     <th scope="col">Kode Barang</th>
@@ -34,8 +34,8 @@
                     <td><%= item.stok_barang %></td>
                     <td>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDetail">Detail</button>
-                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalEdit" data-id="<%= item.kode_barang %>">Edit</button> -->
-                        <button type="button" class="btn btn-danger delete" data-bs-toggle="modal" data-bs-target="#modalDelete" data-id="<%= item.kode_barang %>">Delete</button> -->
+                        <button type="button" class="btn btn-secondary edit" data-bs-toggle="modal" data-bs-target="#modalEdit" data-kode_barang="<%= item.kode_barang %>" data-nama_barang="<%= item.nama_barang %>" data-stok_barang="<%= item.stok_barang %>">Edit</button>
+                        <button type="button" class="btn btn-danger delete" data-bs-toggle="modal" data-bs-target="#modalDelete" data-kode_barang="<%= item.kode_barang %>">Delete</button>
                     </td>
                 </tr>
                 <% } %>
@@ -64,11 +64,10 @@
                             <label for="exampleInputEmail1" class="form-label">Stok Barang</label>
                             <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="stok_barang">
                         </div>
-                        <button type="submit" class="btn btn-success float-end ms-1">Submit</button>
-                        <button type="button" class="btn btn-secondary float-end me-1" data-bs-dismiss="modal">Close</button>    
                     </div>
                     <div class="modal-footer">
-                        <p>...</p>
+                        <button type="submit" class="btn btn-success float-end ms-1">Save</button>
+                        <button type="button" class="btn btn-secondary float-end me-1" data-bs-dismiss="modal">Close</button>    
                     </div>
                 </div>
             </div>
@@ -84,17 +83,17 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                    ...
+                        ...
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        ...
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Modal for Edit-->
+        <form action="/update" method="post">
         <div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -103,15 +102,24 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                    ...
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Nama Barang</label>
+                            <input type="text" class="form-control edit-nama-barang" id="exampleInputEmail1" aria-describedby="emailHelp" name="nama_barang">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Stok Barang</label>
+                            <input type="text" class="form-control edit-stok-barang" id="exampleInputEmail1" aria-describedby="emailHelp" name="stok_barang">
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <input type="hidden" class="edit-kode-barang" name="kode_barang" required>
+                        <button type="submit" class="btn btn-success float-end ms-1">Update</button>
+                        <button type="button" class="btn btn-secondary float-end me-1" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
+        </form>
 
         <!-- Modal for Delete-->
         <form action="/delete" method="post">
@@ -126,7 +134,7 @@
                         <p>Are you sure want to delete this item ?</p>
                     </div>
                     <div class="modal-footer">
-                        <input type="hidden" name="kode_barang" class="kode_barang_variable" required>
+                        <input type="hidden" class="delete-kode-barang" name="kode_barang" required>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </div>
@@ -140,10 +148,35 @@
       <script src="/assets/js/jquery-3.6.2.min.js"></script>
       <script src="/assets/js/bootstrap.min.js"></script>
       <script>
-        // mengisi elemen dengan class kode_barang_variable sehingga mempunyai nilai kode_barang
-        $('#stockTable').on('click','.delete',function(){
-            let kode_barang = $(this).data('id');
-            $('.kode_barang_variable').val(kode_barang);
+        // console.log(document.querySelector('.edit-nama-barang'));
+
+        // mengisi elemen dengan class 
+        // $('#stock-table').on('click', '.edit', () => {
+        //     const kode_barang = $(this).data('kode_barang');
+        //     const nama_barang = $(this).data('nama_barang');
+        //     const stok_barang = $(this).data('stok_barang');
+        //     $('.edit-kode-barang').val(kode_barang);
+        //     $('.edit-nama-barang').val(nama_barang);
+        //     $('.edit-stok-barang').val(stok_barang);
+        // });
+
+        $('#stock-table').on('click','.edit', function() {
+            let kode_barang = $(this).data('kode_barang');
+            let nama_barang = $(this).data('nama_barang');
+            let stok_barang = $(this).data('stok_barang');
+            console.log(kode_barang);
+            console.log(nama_barang);
+            console.log(stok_barang);
+            $('.edit-kode-barang').val(kode_barang);
+            $('.edit-nama-barang').val(nama_barang);
+            $('.edit-stok-barang').val(stok_barang);
+        });
+
+        // mengisi elemen dengan class kode-barang sehingga mempunyai nilai kode_barang
+        $('#stock-table').on('click','.delete', function() {
+            let kode_barang = $(this).data('kode_barang');
+            // console.log(kode_barang);
+            $('.delete-kode-barang').val(kode_barang);
         });
       </script>
 </body>

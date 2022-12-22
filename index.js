@@ -42,13 +42,22 @@ app.post("/save", (req, res) => {
     });
 });
 
+// route for update item 
+app.post("/update", (req, res) => {
+    const { kode_barang, nama_barang, stok_barang } = req.body;
+    const sql = `UPDATE stock SET nama_barang = '${nama_barang}', stok_barang = '${stok_barang}' WHERE kode_barang = '${kode_barang}'`;
+    db.query(sql, (err, result) => {
+        if(err) throw err;
+        res.redirect("/");
+    });
+});
+
 // route for delete item
 app.post("/delete", (req, res) => {
     const { kode_barang } = req.body;
-    // console.log(kode_barang);
     const sql = `DELETE FROM stock WHERE kode_barang='${kode_barang}'`;
     db.query(sql, (err, result) => {
-        // console.log(result);
+        console.log(result);
         if(err) throw err;
         res.redirect("/");
     });
