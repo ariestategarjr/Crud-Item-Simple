@@ -26,8 +26,20 @@ app.use('/assets', express.static(__dirname + '/public'));
 app.get("/", (req, res) => {
     const sql = "SELECT * FROM stock";
     db.query(sql, (err, result) => {
+        if(err) throw err;
         const items = JSON.parse(JSON.stringify(result));
-        res.render("view_stock", { items: items, title: "Simple Stock Items App" });
+        res.render("view_stock", { items: items });
+    });
+});
+
+// route for detail
+app.post("/detail", (req, res) => {
+    const { kode_barang } = req.body;
+    const sql = `SELECT * FROM stock WHERE kode_barang = '${kode_barang}'`;
+    db.query(sql, (err, result) => {
+        if(err) throw err;
+        const item = JSON.parse(JSON.stringify(result));
+        res.send(item);
     });
 });
 

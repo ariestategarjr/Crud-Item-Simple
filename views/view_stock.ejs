@@ -5,16 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Crud Stock</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
     <div class="container">
         <br>
-        
-        <h1><%= title %></h1>
+
+        <h1>Simple Stock Items App</h1>
         <br>
 
-        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalAddNew">Add New</button>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#modalAddNew">Add New</button>
+                </div>
+                <div class="col-sm-6">
+                    <form>
+                        <input type="text" placeholder="Search..." class="search-input" name="search">
+                        <button><i class="fa fa-search search-button"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
         <br><br>
 
         <table class="table" id="stock-table">
@@ -27,18 +40,21 @@
                 </tr>
             </thead>
             <tbody>
+                <form action="/detail" method="post">
                 <% for(let item of items) { %>
-                <tr>
+                <tr id="item">
                     <th scope="row"><%= item.kode_barang %></th>
                     <td><%= item.nama_barang %></td>
                     <td><%= item.stok_barang %></td>
                     <td>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDetail">Detail</button>
+                        <input type="hidden" class="detail-kode-barang" name="kode_barang" required>
+                        <button type="submit" class="btn btn-primary detail" data-bs-toggle="modal" data-bs-target="#modalDetail" data-kode_barang="<%= item.kode_barang %>">Detail</button>
                         <button type="button" class="btn btn-secondary edit" data-bs-toggle="modal" data-bs-target="#modalEdit" data-kode_barang="<%= item.kode_barang %>" data-nama_barang="<%= item.nama_barang %>" data-stok_barang="<%= item.stok_barang %>">Edit</button>
                         <button type="button" class="btn btn-danger delete" data-bs-toggle="modal" data-bs-target="#modalDelete" data-kode_barang="<%= item.kode_barang %>">Delete</button>
                     </td>
                 </tr>
                 <% } %>
+                </form>
             </tbody>
         </table>
 
@@ -83,10 +99,12 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        ...
+                        <p></p>
+                        <p></p>
+                        <p></p>
                     </div>
                     <div class="modal-footer">
-                        ...
+                        <!-- <input type="hidden" class="detail-kode-barang" name="kode_barang" required> -->
                     </div>
                 </div>
             </div>
@@ -148,17 +166,30 @@
       <script src="/assets/js/jquery-3.6.2.min.js"></script>
       <script src="/assets/js/bootstrap.min.js"></script>
       <script>
-        // console.log(document.querySelector('.edit-nama-barang'));
+        $('.search-button').on('click', function(event) {
+            event.preventDefault();
+            let inputSearch = $('.search-input').val().toLowerCase();
+            let items = document.querySelectorAll('#item');
+            // console.log(inputSearch);
+            // console.log(items.length);
+            // console.log(items);
+            // console.log(inputSearch);
+            for(let item of items){
+                let itemContent = item.children[1].innerHTML.toLowerCase();
+                // console.log(itemName);
+                if(itemContent.includes(inputSearch)) {
+                    item.removeAttribute('hidden');               
+                } else {
+                    item.setAttribute('hidden', true);
+                }
+            }   
+        });
 
-        // mengisi elemen dengan class 
-        // $('#stock-table').on('click', '.edit', () => {
-        //     const kode_barang = $(this).data('kode_barang');
-        //     const nama_barang = $(this).data('nama_barang');
-        //     const stok_barang = $(this).data('stok_barang');
-        //     $('.edit-kode-barang').val(kode_barang);
-        //     $('.edit-nama-barang').val(nama_barang);
-        //     $('.edit-stok-barang').val(stok_barang);
-        // });
+        $('#stock-table').on('click','.detail', function() {
+            let kode_barang = $(this).data('kode_barang');
+            // console.log(kode_barang);
+            $('.detail-kode-barang').val(kode_barang);
+        });
 
         $('#stock-table').on('click','.edit', function() {
             let kode_barang = $(this).data('kode_barang');
@@ -175,7 +206,6 @@
         // mengisi elemen dengan class kode-barang sehingga mempunyai nilai kode_barang
         $('#stock-table').on('click','.delete', function() {
             let kode_barang = $(this).data('kode_barang');
-            // console.log(kode_barang);
             $('.delete-kode-barang').val(kode_barang);
         });
       </script>
