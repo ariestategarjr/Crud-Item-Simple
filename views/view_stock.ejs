@@ -170,13 +170,8 @@
             event.preventDefault();
             let inputSearch = $('.search-input').val().toLowerCase();
             let items = document.querySelectorAll('#item');
-            // console.log(inputSearch);
-            // console.log(items.length);
-            // console.log(items);
-            // console.log(inputSearch);
             for(let item of items){
                 let itemContent = item.children[1].innerHTML.toLowerCase();
-                // console.log(itemName);
                 if(itemContent.includes(inputSearch)) {
                     item.removeAttribute('hidden');               
                 } else {
@@ -187,7 +182,6 @@
 
         $('#stock-table').on('click','.detail', function() {
             let kode_barang = $(this).data('kode_barang');
-            // console.log(kode_barang);
             $('.detail-kode-barang').val(kode_barang);
         });
 
@@ -195,9 +189,6 @@
             let kode_barang = $(this).data('kode_barang');
             let nama_barang = $(this).data('nama_barang');
             let stok_barang = $(this).data('stok_barang');
-            console.log(kode_barang);
-            console.log(nama_barang);
-            console.log(stok_barang);
             $('.edit-kode-barang').val(kode_barang);
             $('.edit-nama-barang').val(nama_barang);
             $('.edit-stok-barang').val(stok_barang);

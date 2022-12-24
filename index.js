@@ -4,8 +4,8 @@ const app = express();
 const port = 3000;
 const bodyParser = require('body-parser');
 const db = require('./connection');
-const response = require('./response');
-const { get } = require('http');
+// const response = require('./response');
+// const { get } = require('http');
 
 // connect to database
 db.connect((err) => {
@@ -69,7 +69,6 @@ app.post("/delete", (req, res) => {
     const { kode_barang } = req.body;
     const sql = `DELETE FROM stock WHERE kode_barang='${kode_barang}'`;
     db.query(sql, (err, result) => {
-        console.log(result);
         if(err) throw err;
         res.redirect("/");
     });
