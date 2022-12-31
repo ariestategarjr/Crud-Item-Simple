@@ -33,15 +33,15 @@ app.get("/", (req, res) => {
 });
 
 // route for detail
-app.post("/detail", (req, res) => {
-    const { kode_barang } = req.body;
-    const sql = `SELECT * FROM stock WHERE kode_barang = '${kode_barang}'`;
-    db.query(sql, (err, result) => {
-        if(err) throw err;
-        const item = JSON.parse(JSON.stringify(result));
-        res.send(item);
-    });
-});
+// app.post("/detail/:kode", (req, res) => {
+//     const { kode_barang } = req.params;
+//     const sql = `SELECT * FROM stock WHERE kode_barang = '${kode_barang}'`;
+//     db.query(sql, (err, result) => {
+//         if(err) throw err;
+//         const item = JSON.parse(JSON.stringify(result));
+//         res.send(item);
+//     });
+// });
 
 // route for add new item
 app.post("/save", (req, res) => {
